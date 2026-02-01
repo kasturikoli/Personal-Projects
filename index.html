@@ -52,32 +52,24 @@
     }
 
     /* Card */
-.card {
-  width: 640px;
-  height: 400px;
-  padding: 36px;
+    .card {
+      width: 640px;
+      height: 400px;
+      padding: 36px;
+      background: linear-gradient(180deg, #f6eef4 0%, #e3c8df 100%);
+      border-radius: 24px;
+      box-shadow:
+        0 25px 60px rgba(170, 90, 160, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.5);
+      text-align: center;
+      position: relative;
+      z-index: 2;
 
-  background: linear-gradient(
-    180deg,
-    #f6eef4 0%,
-    #e3c8df 100%
-  );
-
-  border-radius: 24px;
-
-  box-shadow:
-    0 25px 60px rgba(170, 90, 160, 0.28),
-    0 0 0 1px rgba(255, 255, 255, 0.5);
-
-  text-align: center;
-  position: relative;
-  z-index: 2;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 26px;
-}
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 26px;
+    }
 
     h2 {
       margin: 0;
@@ -94,6 +86,7 @@
     /* Slider */
     input[type="range"] {
       width: 100%;
+      margin-top: -4px; /* spacing control */
     }
 
     .slider-value {
@@ -102,19 +95,13 @@
       margin-top: -10px;
     }
 
-.question {
-  margin-bottom: 2px;
-}
-input[type="range"] {
-  margin-top: -4px;
-}
+    .question {
+      margin-bottom: 2px;
+    }
 
-.why {
-  margin-bottom: 2px;
-}
-input[type="text"] {
-  margin-top: -4px;
-}
+    .why {
+      margin-bottom: 2px;
+    }
 
     input[type="text"] {
       width: 100%;
@@ -123,6 +110,7 @@ input[type="text"] {
       border: none;
       outline: none;
       font-size: 15px;
+      margin-top: -4px; /* spacing control */
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
@@ -151,18 +139,25 @@ input[type="text"] {
     .emoji-btn:hover {
       transform: scale(1.3);
     }
+
+    button {
+      padding: 12px 20px;
+      border-radius: 14px;
+      border: none;
+      background: #b455a0;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- Floating emojis -->
   <div id="float-layer"></div>
-
-  <!-- App -->
   <div id="app"></div>
 
-  <!-- Emoji Selector -->
   <div id="emoji-bar">
     <button class="emoji-btn">💋</button>
     <button class="emoji-btn">🫧</button>
@@ -177,7 +172,6 @@ input[type="text"] {
     let currentEmoji = "💋";
     let emojiInterval = null;
 
-    /* Floating Emoji Logic */
     function createFloatEmoji() {
       const el = document.createElement("div");
       el.className = "float-emoji";
@@ -200,7 +194,6 @@ input[type="text"] {
       });
     });
 
-    /* Screen */
     function firstScreen() {
       app.innerHTML = `
         <div class="card">
@@ -219,8 +212,8 @@ input[type="text"] {
           <div class="slider-value" id="sliderValue">7.2</div>
 
           <div id="whyContainer" style="display:none;">
-<p class="why">Why? 🥺</p>
-<input type="text" placeholder="Tell me..." />
+            <p class="why">Why? 🥺</p>
+            <input type="text" id="whyInput" placeholder="Tell me..." />
           </div>
         </div>
       `;
@@ -228,14 +221,29 @@ input[type="text"] {
       const slider = document.getElementById("daySlider");
       const valueText = document.getElementById("sliderValue");
       const whyBox = document.getElementById("whyContainer");
+      const whyInput = document.getElementById("whyInput");
 
       slider.addEventListener("input", () => {
         valueText.textContent = slider.value;
         whyBox.style.display = "block";
       });
+
+      whyInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.target.value.trim() !== "") {
+          secondScreen();
+        }
+      });
     }
 
-    /* Start */
+    function secondScreen() {
+      app.innerHTML = `
+        <div class="card">
+          <h2>I have a few questions to ask you… 💭</h2>
+          <button id="okBtn">Okieee 🥰</button>
+        </div>
+      `;
+    }
+
     firstScreen();
     startEmojiRain("💋");
   </script>
