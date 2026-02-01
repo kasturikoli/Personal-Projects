@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>For You 💖</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -21,16 +22,48 @@
       overflow: hidden;
     }
 
- .card {
-  background: #ffc0cb;
-  padding: 40px;
-  border-radius: 20px;
-  text-align: center;
-  width: 320px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  animation: fadeIn 0.6s ease;
-  position: relative;
-  z-index: 2;
+    /* 💖 Floating Hearts Background */
+    #hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff6b81;
+      font-size: 20px;
+      opacity: 0.8;
+      animation: floatUp 6s linear forwards;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* 💗 Card */
+    .card {
+      background: #ffc0cb;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: fadeIn 0.6s ease;
+      position: relative;
+      z-index: 2;
     }
 
     input {
@@ -78,120 +111,100 @@
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
-    #hearts {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.heart {
-  position: absolute;
-  color: #ff6b81;
-  font-size: 20px;
-  animation: floatUp 6s linear forwards;
-  opacity: 0.8;
-}
-
-@keyframes floatUp {
-  from {
-    transform: translateY(100vh) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-10vh) scale(1.5);
-    opacity: 0;
-  }
-}
-
   </style>
 </head>
+
 <body>
 
-<div id="app"></div>
-<div id="hearts"></div>
+  <!-- Background Hearts -->
+  <div id="hearts"></div>
 
-<script>
-  const app = document.getElementById("app");
+  <!-- App Container -->
+  <div id="app"></div>
 
-  function firstScreen() {
-    app.innerHTML = `
-      <div class="card">
-        <h2>Hello 💙</h2>
-        <p>Type anything to continue</p>
-        <input id="input" placeholder="Type here..." />
-      </div>
-    `;
+  <script>
+    const app = document.getElementById("app");
+    let userName = "";
 
-    document.getElementById("input").addEventListener("keydown", e => {
-      if (e.key === "Enter" && e.target.value.trim() !== "") {
-        questionIntro();
-      }
-    });
-  }
-
-  function questionIntro() {
-    app.innerHTML = `
-      <div class="card">
-        <h2>name,</h2>
-        <p>I have a question...</p>
-      </div>
-    `;
-
-    setTimeout(valentineQuestion, 2000);
-  }
-
-  function valentineQuestion() {
-    app.innerHTML = `
-      <div class="card">
-        <h2>Will you be my Valentine? 💖</h2>
-        <div class="buttons">
-          <button id="yes">Yes</button>
-          <button id="no">No</button>
+    /* Screen 1 */
+    function firstScreen() {
+      app.innerHTML = `
+        <div class="card">
+          <h2>Hello 💙</h2>
+          <p>Type anything to continue</p>
+          <input id="input" placeholder="Type here..." />
         </div>
-      </div>
-    `;
+      `;
 
-    const noBtn = document.getElementById("no");
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 200 - 100;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+      document.getElementById("input").addEventListener("keydown", e => {
+        if (e.key === "Enter" && e.target.value.trim() !== "") {
+          userName = e.target.value.trim();
+          questionIntro();
+        }
+      });
+    }
 
-    document.getElementById("yes").onclick = finalScreen;
-  }
+    /* Screen 2 */
+    function questionIntro() {
+      app.innerHTML = `
+        <div class="card">
+          <h2>${userName},</h2>
+          <p>I have a question...</p>
+        </div>
+      `;
 
-  function finalScreen() {
-    app.innerHTML = `
-      <div class="card">
-        <h1>YAAYYYY 🎉💖</h1>
-        <img src="https://media.giphy.com/media/3oz8xAFtqoOUUrsh7W/giphy.gif" alt="Celebration" />
-      </div>
-    `;
-  }
+      setTimeout(valentineQuestion, 2000);
+    }
 
-  function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 10 + 15 + "px";
-  document.getElementById("hearts").appendChild(heart);
+    /* Screen 3 */
+    function valentineQuestion() {
+      app.innerHTML = `
+        <div class="card">
+          <h2>Will you be my Valentine? 💖</h2>
+          <div class="buttons">
+            <button id="yes">Yes</button>
+            <button id="no">No</button>
+          </div>
+        </div>
+      `;
 
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
-}
+      const noBtn = document.getElementById("no");
+      noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * 200 - 100;
+        const y = Math.random() * 200 - 100;
+        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+      });
 
-setInterval(createHeart, 500);
+      document.getElementById("yes").onclick = finalScreen;
+    }
 
-  firstScreen();
-</script>
+    /* Final Screen */
+    function finalScreen() {
+      app.innerHTML = `
+        <div class="card">
+          <h1>YAAYYYY 🎉💖</h1>
+          <img src="https://media.giphy.com/media/3oz8xAFtqoOUUrsh7W/giphy.gif" alt="Celebration" />
+        </div>
+      `;
+    }
+
+    /* 💕 Heart Generator */
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 10 + 15 + "px";
+      document.getElementById("hearts").appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 500);
+
+    /* Start */
+    firstScreen();
+  </script>
 
 </body>
 </html>
