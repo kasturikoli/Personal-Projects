@@ -94,14 +94,11 @@
       color: #ff4d6d;
       margin-top: -10px;
     }
-
-    .question {
-      margin-bottom: 2px;
-    }
-
-    .why {
-      margin-bottom: 2px;
-    }
+    .block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
     input[type="text"] {
       width: 100%;
@@ -198,23 +195,26 @@
       app.innerHTML = `
         <div class="card">
           <h2>Hello Momo 🐮💞</h2>
-          <p class="question">How was your day?</p>
+<div class="block">
+  <p class="question">How was your day?</p>
 
-          <input
-            type="range"
-            min="0"
-            max="10"
-            step="0.2"
-            value="7.2"
-            id="daySlider"
-          />
+  <input
+    type="range"
+    min="0"
+    max="10"
+    step="0.2"
+    value="7.2"
+    id="daySlider"
+  />
+</div>
+
 
           <div class="slider-value" id="sliderValue">7.2</div>
+<div class="block">
+  <p class="why">Why? 🥺</p>
+  <input type="text" id="whyInput" placeholder="Tell me..." />
+</div>
 
-          <div id="whyContainer" style="display:none;">
-            <p class="why">Why? 🥺</p>
-            <input type="text" id="whyInput" placeholder="Tell me..." />
-          </div>
         </div>
       `;
 
