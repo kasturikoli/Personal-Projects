@@ -104,7 +104,7 @@
   function questionIntro() {
     app.innerHTML = `
       <div class="card">
-        <h2>Mr. Mohit Khurana,</h2>
+        <h2>name,</h2>
         <p>I have a question...</p>
       </div>
     `;
