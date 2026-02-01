@@ -98,6 +98,9 @@
       margin-top: -10px;
     }
 
+    .question {
+  margin-bottom: 2px;
+}
     input[type="text"] {
       width: 100%;
       padding: 10px 12px;
@@ -187,7 +190,7 @@
       app.innerHTML = `
         <div class="card">
           <h2>Hello Momo 🐮💞</h2>
-          <p>How was your day?</p>
+          <p class="question">How was your day?</p>
 
           <input
             type="range"
@@ -198,7 +201,7 @@
             id="daySlider"
           />
 
-          <div class="slider-value" id="sliderValue">5</div>
+          <div class="slider-value" id="sliderValue">7.2</div>
 
           <div id="whyContainer" style="display:none;">
             <p>Why? 🥺</p>
