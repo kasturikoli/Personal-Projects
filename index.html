@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <title>For You 💖</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
+  <!-- Delius Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -15,37 +16,28 @@
     }
 
     body {
-        margin: 0;
+      margin: 0;
       height: 100vh;
-      background: linear-gradient(
-        180deg,
-        #fff5ec 0%,
-        #ffe3f2 100%
-      );
+      background: linear-gradient(180deg, #fff5ec 0%, #ffe3f2 100%);
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
     }
 
-    /* 💖 Floating Hearts Background */
-    #hearts {
+    /* Floating Emoji Layer */
+    #float-layer {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       pointer-events: none;
-      overflow: hidden;
       z-index: 0;
     }
 
-    .heart {
+    .float-emoji {
       position: absolute;
-      color: #ff6b81;
-      font-size: 20px;
-      opacity: 0.8;
+      font-size: 22px;
       animation: floatUp 6s linear forwards;
+      opacity: 0.85;
     }
 
     @keyframes floatUp {
@@ -59,162 +51,166 @@
       }
     }
 
-    /* 💗 Card */
+    /* Card */
     .card {
-      background: linear-gradient(
-        180deg,
-        #ffffff 0%,
-        #f7d9e3 100%
-      );
+      background: linear-gradient(180deg, #ffffff 0%, #f7d9e3 100%);
       width: 360px;
       height: 360px;
       padding: 40px;
       border-radius: 22px;
       text-align: center;
-      box-shadow: 0 20px 50px rgba(255, 105, 180, 0.25);
-      animation: fadeIn 0.6s ease;
+      box-shadow: 0 20px 50px rgba(255,105,180,0.25);
       position: relative;
       z-index: 2;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
     }
 
-    input {
-      margin-top: 20px;
-      padding: 12px;
+    h2 {
+      margin: 0;
+      color: #4a2c3a;
+    }
+
+    p {
+      margin: 0;
+      color: #5a4a4a;
+      font-size: 15px;
+    }
+
+    /* Slider */
+    input[type="range"] {
       width: 100%;
+      margin-top: 10px;
+    }
+
+    .slider-value {
+      font-size: 18px;
+      color: #ff4d6d;
+    }
+
+    input[type="text"] {
+      padding: 10px;
       border-radius: 10px;
       border: none;
       outline: none;
-      font-size: 16px;
+      font-size: 15px;
+      width: 100%;
     }
 
-    .buttons {
-      margin-top: 25px;
+    /* Emoji Bar */
+    #emoji-bar {
+      position: fixed;
+      bottom: 20px;
       display: flex;
-      justify-content: space-between;
-      position: relative;
+      gap: 16px;
+      background: rgba(255,255,255,0.6);
+      padding: 12px 18px;
+      border-radius: 30px;
+      backdrop-filter: blur(8px);
+      z-index: 3;
     }
 
-    button {
-      padding: 12px 20px;
-      border-radius: 10px;
+    .emoji-btn {
+      font-size: 26px;
+      background: none;
       border: none;
-      font-size: 16px;
       cursor: pointer;
+      transition: transform 0.2s ease;
     }
 
-    #yes {
-      background: #ff4d6d;
-      color: white;
-    }
-
-    #no {
-      background: #ffffff;
-      position: absolute;
-      right: 0;
-    }
-
-    img {
-      margin-top: 20px;
-      width: 200px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
+    .emoji-btn:hover {
+      transform: scale(1.3);
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Background Hearts -->
-  <div id="hearts"></div>
+  <!-- Floating emojis -->
+  <div id="float-layer"></div>
 
-  <!-- App Container -->
+  <!-- Main app -->
   <div id="app"></div>
+
+  <!-- Emoji selector -->
+  <div id="emoji-bar">
+    <button class="emoji-btn">💋</button>
+    <button class="emoji-btn">🫧</button>
+    <button class="emoji-btn">🎈</button>
+    <button class="emoji-btn">🎵</button>
+  </div>
 
   <script>
     const app = document.getElementById("app");
-    let userName = "";
+    const floatLayer = document.getElementById("float-layer");
+
+    let currentEmoji = "💋";
+    let emojiInterval = null;
+
+    /* Floating emoji logic */
+    function createFloatEmoji() {
+      const el = document.createElement("div");
+      el.className = "float-emoji";
+      el.textContent = currentEmoji;
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.fontSize = Math.random() * 12 + 18 + "px";
+      floatLayer.appendChild(el);
+
+      setTimeout(() => el.remove(), 6000);
+    }
+
+    function startEmojiRain(emoji) {
+      currentEmoji = emoji;
+      if (emojiInterval) clearInterval(emojiInterval);
+      emojiInterval = setInterval(createFloatEmoji, 500);
+    }
+
+    document.querySelectorAll(".emoji-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        startEmojiRain(btn.textContent);
+      });
+    });
 
     /* Screen 1 */
     function firstScreen() {
       app.innerHTML = `
         <div class="card">
-          <h2>Hello Momo🐮💕</h2>
-          <p> How is your day?</p>
-          <input id="input" placeholder="Enter rating..." />
-        </div>
-      `;
+          <h2>Hello Momo 🐮💞</h2>
+          <p>How was your day?</p>
 
-      document.getElementById("input").addEventListener("keydown", e => {
-        if (e.key === "Enter" && e.target.value.trim() !== "") {
-          userName = e.target.value.trim();
-          questionIntro();
-        }
-      });
-    }
+          <input
+            type="range"
+            min="0"
+            max="10"
+            step="0.2"
+            value="5"
+            id="daySlider"
+          />
+          <div class="slider-value" id="sliderValue">5</div>
 
-    /* Screen 2 */
-    function questionIntro() {
-      app.innerHTML = `
-        <div class="card">
-          <h2>${userName},</h2>
-          <p>I have a question...</p>
-        </div>
-      `;
-
-      setTimeout(valentineQuestion, 2000);
-    }
-
-    /* Screen 3 */
-    function valentineQuestion() {
-      app.innerHTML = `
-        <div class="card">
-          <h2>Will you be my valentine?👉🏻👈🏻🥹</h2>
-          <div class="buttons">
-            <button id="yes">Yes</button>
-            <button id="no">No</button>
+          <div id="whyContainer" style="display:none;">
+            <p>Why? 🥺</p>
+            <input type="text" placeholder="Tell me..." />
           </div>
         </div>
       `;
 
-      const noBtn = document.getElementById("no");
-      noBtn.addEventListener("mouseover", () => {
-        const x = Math.random() * 200 - 100;
-        const y = Math.random() * 200 - 100;
-        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+      const slider = document.getElementById("daySlider");
+      const valueText = document.getElementById("sliderValue");
+      const whyBox = document.getElementById("whyContainer");
+
+      slider.addEventListener("input", () => {
+        valueText.textContent = slider.value;
+        whyBox.style.display = "block";
       });
-
-      document.getElementById("yes").onclick = finalScreen;
     }
-
-    /* Final Screen */
-    function finalScreen() {
-      app.innerHTML = `
-        <div class="card">
-          <h1>YAAYYYY 🎉💖</h1>
-          <img src="https://media.giphy.com/media/3oz8xAFtqoOUUrsh7W/giphy.gif" alt="Celebration" />
-        </div>
-      `;
-    }
-
-    /* 💕 Heart Generator */
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = Math.random() * 10 + 15 + "px";
-      document.getElementById("hearts").appendChild(heart);
-
-      setTimeout(() => heart.remove(), 6000);
-    }
-
-    setInterval(createHeart, 500);
 
     /* Start */
     firstScreen();
+    startEmojiRain("💋");
   </script>
 
 </body>
