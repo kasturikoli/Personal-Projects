@@ -201,6 +201,24 @@
       display: block;
     }
 
+    .cta-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 30px;
+}
+
+#noBtn {
+  position: relative;
+  z-index: 2;
+}
+
+#maybeBtn {
+  position: relative;
+  z-index: 3;
+}
+
   </style>
 </head>
 
@@ -266,17 +284,17 @@
     };
   }
   const mcqQuestions = [
-  { question: "Agar hamari story had a genre.. which one would it be?", options: [
+  { question: "Agar hamari story had a genre.. what would it be?", options: [
       "Rom-Com",
       "Drama",
-      "Indian TV wala genre",
+      "Indian TV wala",
       "Mystery",
       "Sochna padega"]},
 
   {question: "Do you know what I like the most about you? 💕", options: [
       "You being you 🥹🫶🏻",
-      "Pookie🎀 and Edibleness🔥 in one package",
-      "Abhi ho itne ache kya kare🫶🏻",
+      "Pookie 🎀 and Hotness 🔥 in one package",
+      "Sab kuch.. abhi ho itne ache kya kare 🫶🏻",
       "All of the above🖤"]},
 
   { question: "Abhi you know me misses you... do you miss me?", options: [
@@ -293,19 +311,19 @@
 
   { question: "Last questionn... puchuuu?", options: [
       "Of course",
-      "Jaa ree",
+      "Bol ree",
       "I know what is coming next",
-      "Bol jaldii" ]},
+      "Bolo" ]},
 
   { question: "Pakka this is last... puchu kyaa??", options: [
       "One eternity later",
       "Kiti drama",
-      "Bol re",
+      "Jaa re",
       "Okiee"]},
 
   { question: "Are you readyy?", options: [
       "*duck running gif*",
-      "Ha ree",
+      "Jaldi bol, kal subhe Panvel nikalna hai",
       "I am born ready",
       "No, I am Mohit"]}
 ];
@@ -402,11 +420,19 @@
 };
 
 
-    const noBtn = document.getElementById("no");
-    noBtn.onmouseenter = () => {
-      noBtn.style.transform =
-        `translate(${Math.random()*200-200}px,${Math.random()*120-100}px)`;
-    };
+    const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseenter", () => {
+  const parent = noBtn.parentElement;
+
+  const parentRect = parent.getBoundingClientRect();
+
+  const x = Math.random() * (parentRect.width - 120) - parentRect.width / 2;
+  const y = Math.random() * 60 - 30;
+
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+
   }
 
   firstScreen();
