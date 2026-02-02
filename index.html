@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>For Moo 💖</title>
 
-  <!-- Delius Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
@@ -25,7 +24,6 @@
       overflow: hidden;
     }
 
-    /* Floating Emoji Layer */
     #float-layer {
       position: fixed;
       inset: 0;
@@ -41,34 +39,24 @@
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(100vh) scale(1);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-10vh) scale(1.5);
-        opacity: 0;
-      }
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
     }
 
-    /* Card */
     .card {
       width: 640px;
       height: 400px;
       padding: 36px;
       background: linear-gradient(180deg, #f6eef4 0%, #e3c8df 100%);
       border-radius: 24px;
-      box-shadow:
-        0 25px 60px rgba(170, 90, 160, 0.28),
-        0 0 0 1px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 25px 60px rgba(170,90,160,.28);
       text-align: center;
       position: relative;
       z-index: 2;
-
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 32px;
+      gap: 30px;
     }
 
     .card.mcq {
@@ -98,16 +86,13 @@
     }
 
     input[type="text"] {
-      width: 100%;
-      padding: 10px 12px;
+      padding: 12px;
       border-radius: 12px;
       border: none;
-      outline: none;
       font-size: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
-    /* Emoji Bar */
     #emoji-bar {
       position: fixed;
       bottom: 20px;
@@ -115,37 +100,20 @@
       transform: translateX(-50%);
       display: flex;
       gap: 10px;
-      background: rgba(255,255,255,0.65);
+      background: rgba(255,255,255,.65);
       backdrop-filter: blur(8px);
       padding: 8px 16px;
       border-radius: 24px;
       z-index: 3;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
     .emoji-btn {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
       background: none;
       border: none;
+      font-size: 22px;
       cursor: pointer;
     }
 
-    button {
-      padding: 14px 22px;
-      border-radius: 16px;
-      border: none;
-      background: #b455a0;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    /* MCQ */
     .mcq-options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -154,17 +122,14 @@
     }
 
     .mcq-btn {
-      padding: 16px;
-      border-radius: 18px;
+      padding: 14px;
+      border-radius: 16px;
       border: none;
       background: rgba(255,255,255,0.95);
-      color: #4a2c3a;
-      font-size: 16px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      font-size: 16px;
     }
 
-    /* Valentine */
     .valentine-text {
       font-size: 30px;
       color: #4a2c3a;
@@ -176,10 +141,9 @@
       justify-content: center;
       gap: 20px;
       margin-top: 20px;
-      flex-wrap: wrap;
     }
 
-    .gif {
+    .valentine-gif {
       max-width: 100%;
       max-height: 220px;
       border-radius: 16px;
@@ -197,7 +161,6 @@
   <button class="emoji-btn">💋</button>
   <button class="emoji-btn">🫧</button>
   <button class="emoji-btn">🎈</button>
-  <button class="emoji-btn">🎵</button>
 </div>
 
 <script>
@@ -205,7 +168,7 @@
   const floatLayer = document.getElementById("float-layer");
 
   let currentEmoji = "💋";
-  let emojiInterval = null;
+  let emojiInterval;
 
   function createFloatEmoji() {
     const el = document.createElement("div");
@@ -231,9 +194,9 @@
       <div class="card">
         <h2>Hello Momo 🐮💞</h2>
         <p>How was your day?</p>
-        <input type="range" min="0" max="10" step="0.1" value="7.2" id="daySlider"/>
+        <input type="range" min="0" max="10" step="0.1" value="7.2" id="daySlider">
         <div class="slider-value" id="sliderValue">7.2</div>
-        <input type="text" id="whyInput" placeholder="Kashala?" style="display:none"/>
+        <input type="text" id="whyInput" placeholder="Kashala?" style="display:none">
       </div>
     `;
 
@@ -247,29 +210,20 @@
     };
 
     whyInput.onkeydown = e => {
-      if (e.key === "Enter" && e.target.value.trim()) secondScreen();
+      if (e.key === "Enter") secondScreen();
     };
   }
 
   const mcqQuestions = [
-    {
-      question: "Chalo bataoo what I like the most about you? 💕",
-      options: ["You being you 🥹🫶🏻","Pookie🎀 and Edibleness🔥","Abhi ho itne ache kya kare🫶🏻","All of the above🖤"]
-    },
-    {
-      question: "Abhi you know me misses you… kitna you miss me?",
-      options: ["Ab toh aadat si hai","Ha karta hu miss","I miss you","Sab options galat"]
-    },
-    {
-      question: "Toh hum kab milengeeeee? 😭",
-      options: ["Plan banate","Sabr rakho","Ata chya ata","Drama chalu"]
-    }
+    { question: "Chalo bataoo what I like the most about you? 💕", options: ["You being you 🥹🫶🏻","Pookie🎀 & Edibleness🔥","Abhi ho itne ache kya kare🫶🏻","All of the above🖤"]},
+    { question: "Abhi you know me misses you... kitna?", options: ["Bahut zyada","Thoda sa","Obviously","Sab galat"]},
+    { question: "Toh hum kab milenge? 😭", options: ["Plan karte","Sabr rakho","Ata chya ata","Drama chalu"] }
   ];
 
-  let currentQuestionIndex = 0;
+  let qIndex = 0;
 
   function showMCQ() {
-    const q = mcqQuestions[currentQuestionIndex];
+    const q = mcqQuestions[qIndex];
     app.innerHTML = `
       <div class="card mcq">
         <h2>${q.question}</h2>
@@ -281,8 +235,8 @@
 
     document.querySelectorAll(".mcq-btn").forEach(btn => {
       btn.onclick = () => {
-        currentQuestionIndex++;
-        currentQuestionIndex < mcqQuestions.length ? showMCQ() : finalScreen();
+        qIndex++;
+        qIndex < mcqQuestions.length ? showMCQ() : finalScreen();
       };
     });
   }
@@ -290,21 +244,24 @@
   function secondScreen() {
     app.innerHTML = `
       <div class="card">
-        <h2>Me has v v v imp questions 💭</h2>
+        <h2>Me has v v v imp questions… 💭</h2>
         <button id="okBtn">Okieee</button>
       </div>
     `;
-    document.getElementById("okBtn").onclick = showMCQ;
+    document.getElementById("okBtn").onclick = () => {
+      qIndex = 0;
+      showMCQ();
+    };
   }
 
   function finalScreen() {
     app.innerHTML = `
       <div class="card">
-        <div class="valentine-text" id="typingText"></div>
-        <div class="valentine-actions" id="actions" style="display:none;">
-          <button id="yesBtn">Yes 💖</button>
-          <button id="noBtn">No 😤</button>
-          <button id="maybeBtn">Maybe 🤔</button>
+        <div class="valentine-text" id="typing"></div>
+        <div class="valentine-actions" id="actions" style="display:none">
+          <button id="yes">Yes 💖</button>
+          <button id="no">No 😤</button>
+          <button id="maybe">Maybe 🤔</button>
         </div>
       </div>
     `;
@@ -316,39 +273,39 @@
   }
 
   function typeText(text, done) {
-    const el = document.getElementById("typingText");
+    const el = document.getElementById("typing");
     let i = 0;
-    const timer = setInterval(() => {
+    const t = setInterval(() => {
       el.textContent += text[i++];
       if (i === text.length) {
-        clearInterval(timer);
+        clearInterval(t);
         done();
       }
     }, 80);
   }
 
   function setupCTAs() {
-    document.getElementById("yesBtn").onclick = () => {
+    document.getElementById("yes").onclick = () => {
       app.innerHTML = `
         <div class="card">
           <h2>YAAAYYYY!! 😭💖</h2>
-          <img class="gif" src="https://media.tenor.com/NLJSPN6qGDUAAAAd/cat-cat-kiss.gif">
+          <img class="valentine-gif" src="https://media.tenor.com/NLJSPN6qGDUAAAAd/cat-cat-kiss.gif">
         </div>
       `;
     };
 
-    const noBtn = document.getElementById("noBtn");
-    noBtn.onmouseenter = () => {
-      noBtn.style.transform =
-        \`translate(\${Math.random()*200-100}px,\${Math.random()*100-50}px)\`;
-    };
-
-    document.getElementById("maybeBtn").onclick = () => {
+    document.getElementById("maybe").onclick = () => {
       app.innerHTML = `
         <div class="card">
-          <img class="gif" src="https://media.tenor.com/FRiJHoJcXzsAAAAd/nikal-laude.gif">
+          <img class="valentine-gif" src="https://media.tenor.com/FRiJHoJcXzsAAAAd/nikal-laude.gif">
         </div>
       `;
+    };
+
+    const noBtn = document.getElementById("no");
+    noBtn.onmouseenter = () => {
+      noBtn.style.transform =
+        `translate(${Math.random()*200-100}px,${Math.random()*120-60}px)`;
     };
   }
 
