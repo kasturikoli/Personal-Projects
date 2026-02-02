@@ -209,15 +209,13 @@
   margin-top: 30px;
 }
 
-#maybeBtn {
-  position: relative;
-  z-index: 3;    /* 👈 stays above No */
+#noBtn {
+  position: absolute;
 }
 
-#noBtn {
-  position: absolute;   /* 👈 take it OUT of flex */
-  left: 50%;
-  transform: translateX(-80%);
+#maybeBtn {
+  position: relative;
+  z-index: 3;
 }
 
   </style>
@@ -367,11 +365,11 @@
     app.innerHTML = `
       <div class="card">
         <div class="valentine-text" id="typing"></div>
-        <div class="valentine-actions" id="actions" style="display:none">
-          <button id="yes">Yes 💖</button>
-          <button id="no">No 😤</button>
-          <button id="maybe">Maybe 🤔</button>
-        </div>
+        <div class="cta-row" id="actions" style="display:none">
+       <button id="yesBtn" class="pill-cta">Yes 💖</button>
+       <button id="noBtn" class="pill-cta">No 😤</button>
+       <button id="maybeBtn" class="pill-cta">Maybe 🤔</button>
+     </div>
       </div>
     `;
 
@@ -394,32 +392,50 @@
   }
 
   function setupCTAs() {
-    document.getElementById("yes").onclick = () => {
-      app.innerHTML = `
-        <div class="card">
-          <h2>YAAAYYYY!! 😭💖</h2>
-          <img class="valentine-gif" src="https://media.tenor.com/NLJSPN6qGDUAAAAd/cat-cat-kiss.gif">
-        </div>
-      `;
-    };
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const maybeBtn = document.getElementById("maybeBtn");
 
-  
-    document.getElementById("maybeBtn").onclick = () => {
-      app.innerHTML = `
-       <div class="card">
-        <img class="gif" src="https://media.tenor.com/FRiJHoJcXzsAAAAd/nikal-laude.gif" />
-
-       <button id="retryBtn" style="margin-top: 24px;">
-        Let’s try this one more time 🥹 
-        </button>
-    </div>
-  `;
-
-  document.getElementById("retryBtn").onclick = () => {
-    finalScreen(); // 👈 takes him back to "Will you be my Valentine?"
+  // YES
+  yesBtn.onclick = () => {
+    app.innerHTML = `
+      <div class="card">
+        <h2>YAAAYYYY!! 😭💖</h2>
+        <img class="valentine-gif"
+          src="https://media.tenor.com/NLJSPN6qGDUAAAAd/cat-cat-kiss.gif">
+      </div>
+    `;
   };
-};
 
+  // NO → RUN AWAY
+  noBtn.addEventListener("mouseenter", () => {
+    const parent = noBtn.parentElement.getBoundingClientRect();
+
+    const x = Math.random() * (parent.width - 140);
+    const y = Math.random() * 80 - 40;
+
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  });
+
+  // MAYBE
+  maybeBtn.onclick = () => {
+    app.innerHTML = `
+      <div class="card">
+        <img class="valentine-gif"
+          src="https://media.tenor.com/FRiJHoJcXzsAAAAd/nikal-laude.gif">
+
+        <button id="retryBtn" class="pill-cta" style="margin-top:24px;">
+          Let’s try this one more time 🥹
+        </button>
+      </div>
+    `;
+
+    document.getElementById("retryBtn").onclick = () => {
+      finalScreen();
+    };
+  };
+}
 
     const noBtn = document.getElementById("noBtn");
 
