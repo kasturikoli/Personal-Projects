@@ -38,6 +38,13 @@
       animation: floatUp 6s linear forwards;
     }
 
+    #retryBtn {
+  background: #b455a0;
+  border-radius: 999px;
+  padding: 14px 26px;
+}
+
+
     @keyframes floatUp {
       from { transform: translateY(100vh); opacity: 1; }
       to { transform: translateY(-10vh); opacity: 0; }
@@ -129,6 +136,31 @@
       cursor: pointer;
       font-size: 16px;
     }
+    .pill-cta {
+  background: #b455a0;
+  color: white;
+  border: none;
+
+  padding: 14px 36px;
+  border-radius: 999px;
+
+  font-size: 18px;
+  cursor: pointer;
+
+  width: auto;
+  min-width: 140px;
+
+  margin: 0 auto;          /* centers it */
+  display: inline-block;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+   .pill-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.2);
+}
 
     .valentine-text {
       font-size: 30px;
@@ -147,7 +179,7 @@
       border-radius: 999px;
       padding: 14px 28px;
       font-size: 16px;
-      margin-left: -10px;
+      margin-left: -2px;
       transform: translateY(-2px);
       background: #b455a0;
       color: white;
@@ -159,8 +191,8 @@
     }
 
     .valentine-gif {
-      max-width: 100%;
-      max-height: 220px;
+      max-width: 120%;
+      max-height: 320px;
       width: auto;
       height: auto;
       object-fit: contain;
@@ -233,12 +265,50 @@
       if (e.key === "Enter") secondScreen();
     };
   }
-
   const mcqQuestions = [
-    { question: "Chalo bataoo what I like the most about you? 💕", options: ["You being you 🥹🫶🏻","Pookie🎀 & Edibleness🔥","Abhi ho itne ache kya kare🫶🏻","All of the above🖤"]},
-    { question: "Abhi you know me misses you... kitna?", options: ["Bahut zyada","Thoda sa","Obviously","Sab galat"]},
-    { question: "Toh hum kab milenge? 😭", options: ["Plan karte","Sabr rakho","Ata chya ata","Drama chalu"] }
-  ];
+  { question: "Agar hamari story had a genre.. which one would it be?", options: [
+      "Rom-Com",
+      "Drama",
+      "Indian TV wala genre",
+      "Mystery",
+      "Sochna padega"]},
+
+  {question: "Do you know what I like the most about you? 💕", options: [
+      "You being you 🥹🫶🏻",
+      "Pookie🎀 and Edibleness🔥 in one package",
+      "Abhi ho itne ache kya kare🫶🏻",
+      "All of the above🖤"]},
+
+  { question: "Abhi you know me misses you... do you miss me?", options: [
+      "Ab toh aadat si hai mujhko aise jeene mein",
+      "Ha thodasa",
+      "I miss you",
+      "Baad mein I will tell"]},
+
+  { question: "Toh hum kab milengeeeeeeeee? 😭😭", options: [
+      "Karte hai plan...",
+      "Ruko zara, Sabr rakho",
+      "Ata chya ata",
+      "Idhar bhi drama chalu"]},
+
+  { question: "Last questionn... puchuuu?", options: [
+      "Of course",
+      "Jaa ree",
+      "I know what is coming next",
+      "Bol jaldii" ]},
+
+  { question: "Pakka this is last... puchu kyaa??", options: [
+      "One eternity later",
+      "Kiti drama",
+      "Bol re",
+      "Okiee"]},
+
+  { question: "Are you readyy?", options: [
+      "*duck running gif*",
+      "Ha ree",
+      "I am born ready",
+      "No, I am Mohit"]}
+];
 
   let qIndex = 0;
 
@@ -265,7 +335,7 @@
     app.innerHTML = `
       <div class="card">
         <h2>Me has v v v imp questions… 💭</h2>
-        <button id="okBtn">Okieee</button>
+        <button id="okBtn" class="pill-cta">Okieee</button>
       </div>
     `;
     document.getElementById("okBtn").onclick = () => {
@@ -314,13 +384,23 @@
       `;
     };
 
-    document.getElementById("maybe").onclick = () => {
+  
+    document.getElementById("maybeBtn").onclick = () => {
       app.innerHTML = `
-        <div class="card">
-          <img class="valentine-gif" src="https://media.tenor.com/FRiJHoJcXzsAAAAd/nikal-laude.gif">
-        </div>
-      `;
-    };
+       <div class="card">
+        <img class="gif" src="https://media.tenor.com/FRiJHoJcXzsAAAAd/nikal-laude.gif" />
+
+       <button id="retryBtn" style="margin-top: 24px;">
+        Let’s try this one more time 🥹 
+        </button>
+    </div>
+  `;
+
+  document.getElementById("retryBtn").onclick = () => {
+    finalScreen(); // 👈 takes him back to "Will you be my Valentine?"
+  };
+};
+
 
     const noBtn = document.getElementById("no");
     noBtn.onmouseenter = () => {
