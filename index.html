@@ -24,6 +24,13 @@
       overflow: hidden;
     }
 
+    #app {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     #float-layer {
       position: fixed;
       inset: 0;
@@ -37,19 +44,6 @@
       opacity: 0.85;
       animation: floatUp 6s linear forwards;
     }
-
-    #retryBtn {
-  background: #b455a0;
-  border-radius: 999px;
-  padding: 14px 26px;
-}
-
-#app {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
     @keyframes floatUp {
       from { transform: translateY(100vh); opacity: 1; }
@@ -142,31 +136,20 @@
       cursor: pointer;
       font-size: 16px;
     }
+
     .pill-cta {
-  background: #b455a0;
-  color: white;
-  border: none;
-
-  padding: 14px 36px;
-  border-radius: 999px;
-
-  font-size: 18px;
-  cursor: pointer;
-
-  width: auto;
-  min-width: 140px;
-
-  margin: 0 auto;          /* centers it */
-  display: inline-block;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-   .pill-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(0,0,0,0.2);
-}
+      background: #b455a0;
+      color: white;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 999px;
+      font-size: 18px;
+      cursor: pointer;
+      min-width: 140px;
+      margin: 0 auto;
+      display: inline-block;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
 
     .valentine-text {
       font-size: 30px;
@@ -174,56 +157,33 @@
       min-height: 40px;
     }
 
-    .valentine-actions {
+    .cta-row {
+      position: relative;
       display: flex;
       justify-content: center;
-      align-items: center;
-      margin-top: 32px;
+      gap: 48px;
+      margin-top: 30px;
     }
 
-    .valentine-actions button {
-      border-radius: 999px;
-      padding: 14px 28px;
-      font-size: 16px;
-      margin-left: 4px;
-      transform: translateY(-2px);
-      background: #b455a0;
-      color: white;
-      border: none;
-      cursor: pointer;
+    #noBtn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #maybeBtn {
       position: relative;
-      z-index: 1;
-      transition: transform 0.2s ease;
+      z-index: 3;
     }
 
     .valentine-gif {
-      max-width: 120%;
-      max-height: 320px;
-      width: auto;
-      height: auto;
+      max-width: 100%;
+      max-height: 260px;
       object-fit: contain;
       border-radius: 18px;
       margin: 20px auto 0;
       display: block;
     }
-
-    .cta-row {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  gap: 48px;
-  margin-top: 30px;
-}
-
-#noBtn {
-  position: absolute;
-}
-
-#maybeBtn {
-  position: relative;
-  z-index: 3;
-}
-
   </style>
 </head>
 
@@ -239,228 +199,157 @@
 </div>
 
 <script>
-  const app = document.getElementById("app");
-  const floatLayer = document.getElementById("float-layer");
+const app = document.getElementById("app");
+const floatLayer = document.getElementById("float-layer");
 
-  let currentEmoji = "💋";
-  let emojiInterval;
+let currentEmoji = "💋";
+let emojiInterval;
 
-  function createFloatEmoji() {
-    const el = document.createElement("div");
-    el.className = "float-emoji";
-    el.textContent = currentEmoji;
-    el.style.left = Math.random() * 100 + "vw";
-    floatLayer.appendChild(el);
-    setTimeout(() => el.remove(), 6000);
-  }
+function createFloatEmoji() {
+  const el = document.createElement("div");
+  el.className = "float-emoji";
+  el.textContent = currentEmoji;
+  el.style.left = Math.random() * 100 + "vw";
+  floatLayer.appendChild(el);
+  setTimeout(() => el.remove(), 6000);
+}
 
-  function startEmojiRain(emoji) {
-    currentEmoji = emoji;
-    clearInterval(emojiInterval);
-    emojiInterval = setInterval(createFloatEmoji, 500);
-  }
+function startEmojiRain(emoji) {
+  currentEmoji = emoji;
+  clearInterval(emojiInterval);
+  emojiInterval = setInterval(createFloatEmoji, 500);
+}
 
-  document.querySelectorAll(".emoji-btn").forEach(btn => {
-    btn.onclick = () => startEmojiRain(btn.textContent);
-  });
+document.querySelectorAll(".emoji-btn").forEach(btn => {
+  btn.onclick = () => startEmojiRain(btn.textContent);
+});
 
-  function firstScreen() {
-    app.innerHTML = `
-      <div class="card">
-        <h2>Hello Momo 🐮💞</h2>
-        <p>How was your day?</p>
-        <input type="range" min="0" max="10" step="0.1" value="7.2" id="daySlider">
-        <div class="slider-value" id="sliderValue">7.2</div>
-        <input type="text" id="whyInput" placeholder="Kashala?" style="display:none">
-      </div>
-    `;
+/* ---------- FLOW ---------- */
 
-    const slider = document.getElementById("daySlider");
-    const valueText = document.getElementById("sliderValue");
-    const whyInput = document.getElementById("whyInput");
+function firstScreen() {
+  app.innerHTML = `
+    <div class="card">
+      <h2>Hello Momo 🐮💞</h2>
+      <p>How was your day?</p>
+      <input type="range" min="0" max="10" step="0.1" value="7.2" id="daySlider">
+      <div class="slider-value" id="sliderValue">7.2</div>
+      <input type="text" id="whyInput" placeholder="Kashala?" style="display:none">
+    </div>
+  `;
 
-    slider.oninput = () => {
-      valueText.textContent = slider.value;
-      whyInput.style.display = "block";
-    };
+  const slider = document.getElementById("daySlider");
+  const valueText = document.getElementById("sliderValue");
+  const whyInput = document.getElementById("whyInput");
 
-    whyInput.onkeydown = e => {
-      if (e.key === "Enter") secondScreen();
-    };
-  }
-  const mcqQuestions = [
-  { question: "Agar hamari story had a genre.. what would it be?", options: [
-      "Rom-Com",
-      "Drama",
-      "Indian TV wala",
-      "Mystery",
-      "Sochna padega"]},
+  slider.oninput = () => {
+    valueText.textContent = slider.value;
+    whyInput.style.display = "block";
+  };
 
-  {question: "Do you know what I like the most about you? 💕", options: [
-      "You being you 🥹🫶🏻",
-      "Pookie 🎀 and Hotness 🔥 in one package",
-      "Sab kuch.. abhi ho itne ache kya kare 🫶🏻",
-      "All of the above🖤"]},
+  whyInput.onkeydown = e => {
+    if (e.key === "Enter") secondScreen();
+  };
+}
 
-  { question: "Abhi you know me misses you... do you miss me?", options: [
-      "Ab toh aadat si hai mujhko aise jeene mein",
-      "Ha thodasa",
-      "I miss you",
-      "Baad mein I will tell"]},
-
-  { question: "Toh hum kab milengeeeeeeeee? 😭😭", options: [
-      "Karte hai plan...",
-      "Ruko zara, Sabr rakho",
-      "Ata chya ata",
-      "Idhar bhi drama chalu"]},
-
-  { question: "Last questionn... puchuuu?", options: [
-      "Of course",
-      "Bol ree",
-      "I know what is coming next",
-      "Bolo" ]},
-
-  { question: "Pakka this is last... puchu kyaa??", options: [
-      "One eternity later",
-      "Kiti drama",
-      "Jaa re",
-      "Okiee"]},
-
-  { question: "Are you readyy?", options: [
-      "*duck running gif*",
-      "Jaldi bol, kal subhe Panvel nikalna hai",
-      "I am born ready",
-      "No, I am Mohit"]}
+const mcqQuestions = [
+  { question: "Agar hamari story had a genre.. what would it be?", options: ["Rom-Com","Drama","Indian TV wala","Mystery"]},
+  { question: "Do you know what I like the most about you? 💕", options: ["You being you 🥹","Pookie 🎀","Sab kuch 🫶🏻","All of the above🖤"]},
+  { question: "Do you miss me?", options: ["Ha thodasa","I miss you","Always","Secretly"]},
+  { question: "Are you readyy?", options: ["Yes","No","Maybe","Absolutely"]}
 ];
 
-  let qIndex = 0;
+let qIndex = 0;
 
-  function showMCQ() {
-    const q = mcqQuestions[qIndex];
-    app.innerHTML = `
-      <div class="card mcq">
-        <h2>${q.question}</h2>
-        <div class="mcq-options">
-          ${q.options.map(o => `<button class="mcq-btn">${o}</button>`).join("")}
-        </div>
+function showMCQ() {
+  const q = mcqQuestions[qIndex];
+  app.innerHTML = `
+    <div class="card mcq">
+      <h2>${q.question}</h2>
+      <div class="mcq-options">
+        ${q.options.map(o => `<button class="mcq-btn">${o}</button>`).join("")}
       </div>
-    `;
+    </div>
+  `;
 
-    document.querySelectorAll(".mcq-btn").forEach(btn => {
-      btn.onclick = () => {
-        qIndex++;
-        qIndex < mcqQuestions.length ? showMCQ() : finalScreen();
-      };
-    });
-  }
-
-  function secondScreen() {
-    app.innerHTML = `
-      <div class="card">
-        <h2>Me has v v v imp questions… 💭</h2>
-        <button id="okBtn" class="pill-cta">Okieee</button>
-      </div>
-    `;
-    document.getElementById("okBtn").onclick = () => {
-      qIndex = 0;
-      showMCQ();
+  document.querySelectorAll(".mcq-btn").forEach(btn => {
+    btn.onclick = () => {
+      qIndex++;
+      qIndex < mcqQuestions.length ? showMCQ() : finalScreen();
     };
-  }
+  });
+}
 
-  function finalScreen() {
-    app.innerHTML = `
-      <div class="card">
-        <div class="valentine-text" id="typing"></div>
-        <div class="cta-row" id="actions" style="display:none">
-       <button id="yesBtn" class="pill-cta">Yes 💖</button>
-       <button id="noBtn" class="pill-cta">No 😤</button>
-       <button id="maybeBtn" class="pill-cta">Maybe 🤔</button>
-     </div>
+function secondScreen() {
+  app.innerHTML = `
+    <div class="card">
+      <h2>Me has v v v imp questions… 💭</h2>
+      <button class="pill-cta" onclick="showMCQ()">Okieee</button>
+    </div>
+  `;
+}
+
+function finalScreen() {
+  app.innerHTML = `
+    <div class="card">
+      <div class="valentine-text" id="typing"></div>
+      <div class="cta-row" id="actions" style="display:none">
+        <button id="yesBtn" class="pill-cta">Yes 💖</button>
+        <button id="noBtn" class="pill-cta">No 😤</button>
+        <button id="maybeBtn" class="pill-cta">Maybe 🤔</button>
       </div>
-    `;
+    </div>
+  `;
 
-    typeText("Will you be my Valentine? 💌", () => {
-      document.getElementById("actions").style.display = "flex";
-      setupCTAs();
-    });
-  }
+  typeText("Will you be my Valentine? 💌", () => {
+    document.getElementById("actions").style.display = "flex";
+    setupCTAs();
+  });
+}
 
-  function typeText(text, done) {
-    const el = document.getElementById("typing");
-    let i = 0;
-    const t = setInterval(() => {
-      el.textContent += text[i++];
-      if (i === text.length) {
-        clearInterval(t);
-        done();
-      }
-    }, 80);
-  }
+function typeText(text, done) {
+  const el = document.getElementById("typing");
+  let i = 0;
+  const t = setInterval(() => {
+    el.textContent += text[i++];
+    if (i === text.length) {
+      clearInterval(t);
+      done();
+    }
+  }, 80);
+}
 
-  function setupCTAs() {
+function setupCTAs() {
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
   const maybeBtn = document.getElementById("maybeBtn");
 
-  // YES
   yesBtn.onclick = () => {
     app.innerHTML = `
       <div class="card">
         <h2>YAAAYYYY!! 😭💖</h2>
-        <img class="valentine-gif"
-          src="https://media.tenor.com/NLJSPN6qGDUAAAAd/cat-cat-kiss.gif">
+        <img class="valentine-gif" src="https://media.tenor.com/NLJSPN6qGDUAAAAd/cat-cat-kiss.gif">
       </div>
     `;
   };
 
-  // NO → RUN AWAY
   noBtn.addEventListener("mouseenter", () => {
-    const parent = noBtn.parentElement.getBoundingClientRect();
-
-    const x = Math.random() * (parent.width - 140);
-    const y = Math.random() * 80 - 40;
-
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
+    const p = noBtn.parentElement.getBoundingClientRect();
+    noBtn.style.left = Math.random() * (p.width - 140) + "px";
+    noBtn.style.top = Math.random() * 80 - 40 + "px";
   });
 
-  // MAYBE
   maybeBtn.onclick = () => {
     app.innerHTML = `
       <div class="card">
-        <img class="valentine-gif"
-          src="https://media.tenor.com/FRiJHoJcXzsAAAAd/nikal-laude.gif">
-
-        <button id="retryBtn" class="pill-cta" style="margin-top:24px;">
-          Let’s try this one more time 🥹
-        </button>
+        <img class="valentine-gif" src="https://media.tenor.com/FRiJHoJcXzsAAAAd/nikal-laude.gif">
+        <button class="pill-cta" style="margin-top:24px" onclick="finalScreen()">Let’s Try This One More Time 🥹</button>
       </div>
     `;
-
-    document.getElementById("retryBtn").onclick = () => {
-      finalScreen();
-    };
   };
 }
 
-    const noBtn = document.getElementById("noBtn");
-
-noBtn.addEventListener("mouseenter", () => {
-  const parent = noBtn.parentElement;
-  const parentRect = parent.getBoundingClientRect();
-
-  const x = Math.random() * (parentRect.width - 120);
-  const y = Math.random() * 60 - 30;
-
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
-});
-
-
-  }
-
-  firstScreen();
-  startEmojiRain("💋");
+firstScreen();
+startEmojiRain("💋");
 </script>
 
 </body>
